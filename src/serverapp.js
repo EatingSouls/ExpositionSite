@@ -42,7 +42,7 @@ app.use("/noscript", function(req, res, next) {
 });
 
 app.use(function(req, res, next) {
-    res.status(404).render('utils/errorfile', {error: {message: "Page not found", code:404}});
+    res.status(404).render('utils/errorfile');
 });
 
 if(process.env.NODE_ENV == "production"){
