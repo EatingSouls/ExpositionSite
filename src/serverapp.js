@@ -96,6 +96,50 @@ if(process.env.NODE_ENV == "production") {
     console.log("SSL status:", colors("red", "Disabled"))
 }
 
+const io = require('socket.io')(httpSelector, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+        transports: ['websocket', 'polling'],
+        credentials: true
+    },
+    allowEIO3: true
+});
+
+global.io = io;
+if(global.io){
+    console.log("Socket status:", colors("green", "Enabled"))
+} else {
+    console.log("Socket status:", colors("red", "Disabled"))
+}
+
+// io.on('connection', async (socket) => {
+
+
+
+// });
+
+var Particle = require('particle-api-js');
+var particle = new Particle();
+setInterval(() => {
+
+    particle.getVariable({ deviceId: '43004d000751373238323937', name: 'smoke', auth: "5a23c4e8837981d9938f4c8b74fde13c31fc3b7a" }).then(function(data) {
+        global.io.emit('ping', {
+            val: data.body.result != undefined ? data.body.result : 0
+        });
+      }, function(err) {
+        global.io.emit('ping', {
+            val: 0
+        });
+      });
+
+}, 1000);
+
+
+// io.on('connection', function(socket) {
+//     console.log("User connected");
+// });
+
 global.link = process.env.NODE_ENV == "production" ? `${process.env.DEFAULT_LINK}:433` : `${process.env.DEFAULT_LINK}`;
 
 function colors(color, text) {
