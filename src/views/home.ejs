@@ -4,23 +4,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/home.scss">
-    <link rel="shortcut icon" href="/Icon/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
     <title>Rilevatore</title>
 </head>
 <body>
     <div>
-        <h1>Valore photon</h1>
-        <p id="value"></p>
-    </div>
-
-    <div>
+        <h3>Valore photon - <span id="value">0</span></h3>
         <canvas id="myChart" height="140"></canvas>
     </div>
-
-    <button onclick="pauseManager()" id="btn">Pause</button>
-    
+</body>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-<script src="/scripts/index.js"></script>
-</body>
+    <script src="/scripts/index.js"></script>
 </html>

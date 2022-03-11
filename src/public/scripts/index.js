@@ -1,8 +1,11 @@
 var io = io(window.location.origin);
+var isPaused = false;
 
 io.on("ping", (data) => {
     var v = new Date();
-    addData(v.getHours() +":"+ v.getMinutes() + ":" + v.getSeconds(), data.val.toFixed(2));
+    if(isPaused) { return; }
+    document.getElementById("value").innerHTML = data.val.toFixed(4);
+    addData(v.getHours() +":"+ v.getMinutes() + ":" + v.getSeconds(), data.val.toFixed(4));
 });
 
 const ctx = document.getElementById('myChart');
@@ -42,6 +45,17 @@ const myChart = new Chart(ctx, {
 
 const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
 const down = (ctx, value) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined;
+
+
+function pauseManager(v) {
+    if(isPaused == false) {
+        isPaused = true;
+        v.innerHTML = "Start";
+    } else {
+        isPaused = false;
+        v.innerHTML = "Pause";
+    }
+}
 
 function addData(label, data) {
   if(myChart.data.labels.length > 50){
