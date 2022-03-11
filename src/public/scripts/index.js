@@ -16,6 +16,7 @@ io.on("ping", (data) => {
                 label: 'Purezza aria',
                 data: [],
                 borderColor: 'rgb(82, 235, 52)',
+                backgroundColor: 'rgb(82, 235, 52)',
                 segment: {
                     borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
                     borderDash: ctx => skipped(ctx, [6, 6]),
@@ -37,6 +38,10 @@ io.on("ping", (data) => {
                         color: "gray"
                     }
                 },
+                myScale: {
+                    type: 'logarithmic',
+                    position: 'right', // `axis` is determined by the position as `'y'`
+                  }
             }
             
         }
@@ -47,6 +52,9 @@ io.on("ping", (data) => {
     
     
     function addData(label, data) {
+        if(myChart.data.labels.length > 50){
+            removeData(myChart);
+        }
         myChart.data.labels.push(label);
         myChart.data.datasets.forEach((dataset) => {
             dataset.data.push(data);
@@ -55,9 +63,9 @@ io.on("ping", (data) => {
     }
     
     function removeData(chart) {
-        chart.data.labels.pop();
+        chart.data.labels.shift();
         chart.data.datasets.forEach((dataset) => {
-            dataset.data.pop();
+            dataset.data.shift();
         });
         chart.update();
     }
