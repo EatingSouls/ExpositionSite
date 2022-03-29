@@ -60,7 +60,7 @@ const fs = require("fs");
 const https = require("https");
 
 
-http.listen(30, function () {
+http.listen(3000, function () {
     console.log(`Website status:`, colors("green", "ONLINE"));
     if(process.env.NODE_ENV == "production"){
         console.log("MODE:", colors("yellow", "Production"));
