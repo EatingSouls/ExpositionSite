@@ -22,6 +22,7 @@ const myChart = new Chart(ctx, {
     }]
   },
   options: {
+    reponsive: true,
     animation: false,
     scales: {
       y: {
